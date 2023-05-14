@@ -36,19 +36,19 @@ path,i,svg{
     width: 80%;
     padding: 1rem;
     background: rgb(255,255,255);
-    opacity: 0;
+    /* opacity: 0; */
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
-    transform: translateY(100px);
+/*     transform: translateY(100px); */
     transition: all 0.5s ease-in-out;
-    pointer-events: none;
+/*     pointer-events: none; */
 }
 .sliders.active{
     opacity: 1;
     transform: translateY(0px);
     pointer-events: all;
 }
-.siders button{
+.sliders button{
     position: absolute;
     top: 0;
     right: 0;
@@ -96,3 +96,12 @@ path,i,svg{
     background: none;
     margin: 2rem 0rem;
 }
+
+input[type="range"]{
+    width: 100%;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin: 1rem 0rem;
+    border-radius: 1rem;
+    position: relative;
+}   
