@@ -34,11 +34,11 @@ colorDivs.forEach((div, index) => {
 		updateTextUi(index);
 	});
 });
-currentHexes.forEach((hex) => {
+/* currentHexes.forEach((hex) => {
 	hex.addEventListener("click", () => {
 		copyToClipboard(hex);
 	});
-});
+}); */
 popup.addEventListener("transitionend", () => {
 	const popupBox = popup.children[0];
 	popup.classList.remove("active");
@@ -54,6 +54,12 @@ closeAdjustments.forEach((button, index) => {
 		closeAdjustmentPanel(index);
 	});
 });
+lockButton.forEach((button, index) => {
+	button.addEventListener("click", (e) => {
+		lockLayer(e, index);
+	});
+});
+
 //Functions
 
 //Color generator with chromaJS
@@ -65,11 +71,23 @@ function generateHex() {
 //Random color
 function randomColors() {
 	initialColors = [];
+
 	colorDivs.forEach((div, index) => {
 		const hexText = div.children[0];
 		const randomColor = generateHex();
+	
 		//Add it to the array
-		initialColors.push(chroma(randomColor).hex());
+		if (div.classList.contains("locked")) {
+	
+			initialColors.push(hexText.innerText);
+			return;
+		} else {
+			initialColors.push(chroma(randomColor).hex());
+			
+			
+		}
+		
+
 		//Add the color to the background
 		div.style.backgroundColor = randomColor;
 		hexText.innerText = randomColor;
@@ -179,7 +197,7 @@ function resetInputs() {
 	});
 }
 
-function copyToClipboard(hex) {
+/* function copyToClipboard(hex) {
 	const el = document.createElement("textarea");
 	el.value = hex.innertext;
 	document.body.appendChild(el);
@@ -190,7 +208,7 @@ function copyToClipboard(hex) {
 	const popupBox = popup.children[0];
 	popup.classList.add = "active";
 	popupBox.classList.add("active");
-}
+} */
 
 function openAdjustmentPanel(index) {
 	sliderContainers[index].classList.toggle("active");
@@ -198,5 +216,15 @@ function openAdjustmentPanel(index) {
 
 function closeAdjustmentPanel(index) {
 	sliderContainers[index].classList.remove("active");
+}
+function lockLayer(e, index) {
+	const lockSVG = e.target.children[0];
+	const activeBg = colorDivs[index];
+	activeBg.classList.toggle("locked");
+	if (lockSVG.classList.contains("fa-lock-open")) {
+		e.target.innerHTML = '<i class="fas fa-lock"></i>';
+	} else {
+		e.target.innerHTML = '<i class="fas fa-lock-open"></i>';
+	}
 }
 randomColors();
