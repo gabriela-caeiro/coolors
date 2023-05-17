@@ -16,9 +16,16 @@ const colorDivs = document.querySelectorAll(".color");
 const generateBtn = document.querySelector(".generate");
 const sliders = document.querySelectorAll('input[type="range"]');
 const currentHexes = document.querySelectorAll(".color h2");
+const popup = document.querySelector(".copy-container");
+const adjustButton = document.querySelectorAll(".adjust");
+const closeAdjustments = document.querySelectorAll(".close-adjustment");
+const lockButton = document.querySelectorAll(".lock");
+const sliderContainers = document.querySelectorAll(".sliders");
 let initialColors;
 
 //Event listenters
+generateBtn.addEventListener("click", randomColors);
+
 sliders.forEach((slider) => {
 	slider.addEventListener("input", hslControls);
 });
@@ -27,7 +34,26 @@ colorDivs.forEach((div, index) => {
 		updateTextUi(index);
 	});
 });
-
+currentHexes.forEach((hex) => {
+	hex.addEventListener("click", () => {
+		copyToClipboard(hex);
+	});
+});
+popup.addEventListener("transitionend", () => {
+	const popupBox = popup.children[0];
+	popup.classList.remove("active");
+	popupBox.classList.remove("active");
+});
+adjustButton.forEach((button, index) => {
+	button.addEventListener("click", () => {
+		openAdjustmentPanel(index);
+	});
+});
+closeAdjustments.forEach((button, index) => {
+	button.addEventListener("click", () => {
+		closeAdjustmentPanel(index);
+	});
+});
 //Functions
 
 //Color generator with chromaJS
@@ -61,6 +87,11 @@ function randomColors() {
 
 	//Reset inputs
 	resetInputs();
+	//Check for btn contrast
+	adjustButton.forEach((button, index) => {
+		checkTextContrast(initialColors[index], button);
+		checkTextContrast(initialColors[index], lockButton[index]);
+	});
 }
 
 function checkTextContrast(color, text) {
@@ -109,6 +140,9 @@ function hslControls(e) {
 		.set("hsl.l", brightness.value)
 		.set("hsl.h", hue.value);
 	colorDivs[index].style.backgroundColor = color;
+
+	//Colorize sliders
+	colorizeSliders(color, hue, brightness, saturation);
 }
 
 function updateTextUi(index) {
@@ -145,4 +179,24 @@ function resetInputs() {
 	});
 }
 
+function copyToClipboard(hex) {
+	const el = document.createElement("textarea");
+	el.value = hex.innertext;
+	document.body.appendChild(el);
+	el.select();
+	document.execCommand("copy");
+	document.body.removeChild(el);
+	//Pop up animation
+	const popupBox = popup.children[0];
+	popup.classList.add = "active";
+	popupBox.classList.add("active");
+}
+
+function openAdjustmentPanel(index) {
+	sliderContainers[index].classList.toggle("active");
+}
+
+function closeAdjustmentPanel(index) {
+	sliderContainers[index].classList.remove("active");
+}
 randomColors();
