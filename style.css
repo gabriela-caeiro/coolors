@@ -25,7 +25,6 @@ path,i,svg{
     overflow: hidden;
 }
 .color h2{
-    cursor: pointer;
     font-size: 2rem;
 }
 .sliders{
@@ -143,13 +142,18 @@ input[type="range"]{
     font-size: 1.4rem;
 }
 .copy-popup h4,.save-popup h4,.library-popup h4{
-    font-size: 2rem;
-    padding-top: 0px;
+    font-size: 1.4rem;
+    padding: 20px;
+    
 }
-.close-save,.close-library{
+.close-save{
     border-top-right-radius: 1rem;
     border-top-left-radius: 0rem;
     padding: 0.5rem;
+}
+.close-library{
+    padding: 0.8rem;
+
 }
 .submit-save{
     margin: 2rem;
@@ -163,4 +167,38 @@ input[type="range"]{
 .save-name {
     font-size: 1rem;
     padding: 0.8rem;
+  }
+  .library-popup{
+    min-width: 30%;
+    padding: 1rem;
+    justify-content: flex-start;
+    overflow-y: scroll;
+    max-height: 50vh;
+  }
+  .custom-palette{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 2rem;
+  }
+  .small-preview{
+    display: flex;
+    flex: 1;
+  }
+  .custom-palette h4{
+    flex: 0.5;
+  }
+  .small-preview div{
+    flex: 1;
+    height: 5rem;
+  }
+  .pick-palette-btn{
+    height: 5rem;
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: white;
+    background-color: rgb(41,41,41);
   }
