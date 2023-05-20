@@ -33,7 +33,7 @@ sliders.forEach((slider) => {
 });
 colorDivs.forEach((div, index) => {
 	div.addEventListener("change", () => {
-		updateTextUi(index);
+		updateTextUI(index);
 	});
 });
 /* currentHexes.forEach((hex) => {
@@ -161,7 +161,7 @@ function hslControls(e) {
 	colorizeSliders(color, hue, brightness, saturation);
 }
 
-function updateTextUi(index) {
+function updateTextUI(index) {
 	const activeDiv = colorDivs[index];
 	const color = chroma(activeDiv.style.backgroundColor);
 	const textHex = activeDiv.querySelector("h2");
@@ -288,6 +288,21 @@ function savePalette(e) {
 	paletteBtn.classList.add(paletteObj.nr);
 	paletteBtn.innerText = "Select";
 
+	//Attach event to the btn
+	paletteBtn.addEventListener("click", (e) => {
+		closeLibrary();
+		const paletteIndex = e.target.classList[1];
+		initialColors = [];
+		savedPalettes[paletteIndex].colors.forEach((color, index) => {
+			initialColors.push(color);
+			colorDivs[index].style.backgroundColor = color;
+			const text = colorDivs[index].children[0];
+			checkTextContrast(color, text);
+			updateTextUI(index);
+		});
+		resetInputs();
+	});
+
 	//Append to library
 	palette.appendChild(title);
 	palette.appendChild(preview);
@@ -317,4 +332,6 @@ function closeLibrary() {
 	libraryContainer.classList.remove("active");
 	popup.classList.remove("active");
 }
+
+
 randomColors();
