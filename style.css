@@ -160,3 +160,7 @@ input[type="range"]{
     color: white;
     cursor: pointer;
 }
+.save-name {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
