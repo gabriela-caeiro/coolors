@@ -384,10 +384,36 @@ function getLocal() {
 			palette.appendChild(title);
 			palette.appendChild(preview);
 			palette.appendChild(paletteBtn);
+			//palette.appendChild(paletteTrashBtn);
 			libraryContainer.children[0].appendChild(palette);
+			//paletteTrashBtn.addEventListener("click", removePalette);
 		});
 	}
 }
+
+/* function removePalette(e) {
+	const item = e.target;
+	if (item.classList[0] === "palette-trash-btn") {
+	  const paletteItem = item.parentElement;
+	  paletteItem.classList.add("fall");
+	  removeLocalPalette(paletteItem);
+	  paletteItem.addEventListener("transitionend", function () {
+		paletteItem.remove();
+	  });
+	}
+  }
+   
+  function removeLocalPalette(paletteItem) {
+	let localPalettes;
+	if (localStorage.getItem("palettes") === null) {
+	  localPalettes = [];
+	} else {
+	  localPalettes = JSON.parse(localStorage.getItem("palettes"));
+	}
+	const paletteIndex = paletteItem.children[0].innerText;
+	localPalettes.splice(localPalettes.indexOf(paletteIndex), 1);
+	localStorage.setItem("palettes", JSON.stringify(localPalettes));
+  } */
 
 //localStorage.clear();
 getLocal();
